@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unuglifier 🤡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 280px;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0a5d00 100%);
+            color: #00ff88;
+            min-height: 400px;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            letter-spacing: 1px;
+            color: #00ff88;
+        }
+
+        #vidId {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border: 1px solid #00ff88;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: #00ff88;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.1);
+        }
+
+        #vidId::placeholder {
+            color: rgba(0, 255, 136, 0.6);
+        }
+
+        #vidId:focus {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: #00ff88;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover:before {
+            left: 100%;
+        }
+
+        button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #start {
+            grid-column: 1 / -1;
+            background: rgba(46, 213, 115, 0.3);
+            border: 1px solid rgba(46, 213, 115, 0.5);
+        }
+
+        #start:hover {
+            background: rgba(46, 213, 115, 0.4);
+            box-shadow: 0 8px 25px rgba(46, 213, 115, 0.3);
+        }
+
+        #play {
+            background: rgba(52, 152, 219, 0.3);
+            border: 1px solid rgba(52, 152, 219, 0.5);
+        }
+
+        #play:hover {
+            background: rgba(52, 152, 219, 0.4);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        #pause {
+            background: rgba(241, 196, 15, 0.3);
+            border: 1px solid rgba(241, 196, 15, 0.5);
+        }
+
+        #pause:hover {
+            background: rgba(241, 196, 15, 0.4);
+            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.3);
+        }
+
+        #stop {
+            grid-column: 1 / -1;
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid rgba(231, 76, 60, 0.5);
+        }
+
+        #stop:hover {
+            background: rgba(231, 76, 60, 0.4);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+        }
+
+        #status {
+            text-align: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #00ff88;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            margin-top: 10px;
+        }
+
+        .icon {
+            margin-right: 6px;
+        }
+
+        .status-active {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+        }
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+  </head>
+  <body>
+    <h3>Unuglifier 🤡</h3>
+    <input id="vidId" placeholder="Enter YouTube Video ID">
+    
+    <div class="button-container">
+        <button id="start"><span class="icon">🎵</span>Start Music</button>
+        <button id="play"><span class="icon">▶️</span>Play</button>
+        <button id="pause"><span class="icon">⏸️</span>Pause</button>
+        <button id="stop"><span class="icon">⏹️</span>Stop Music</button>
+    </div>
+    
+    <div id="status">Ready</div>
+    <script src="popup.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
